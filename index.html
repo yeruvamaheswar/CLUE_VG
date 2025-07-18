@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Clue Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Virtual Clue Game</h1>
+            <div class="game-info">
+                <span id="current-player">Player 1's Turn</span>
+                <span id="game-status">Waiting for players...</span>
+            </div>
+        </header>
+
+        <!-- Top Controls -->
+        <div class="top-controls">
+            <div class="players-section">
+                <h3>Players</h3>
+                <div id="players-list"></div>
+            </div>
+
+            <div class="cards-section">
+                <h3>Your Cards</h3>
+                <div id="player-cards"></div>
+            </div>
+
+            <div class="actions-section">
+                <h3>Actions</h3>
+                <div class="dice-section">
+                    <button id="roll-dice">🎲 Roll Dice</button>
+                    <div id="dice-result"></div>
+                    <div id="movement-points">Moves: 0</div>
+                </div>
+                <button id="make-suggestion" disabled>Make Suggestion</button>
+                <button id="make-accusation">Make Accusation</button>
+                <button id="use-secret-passage" disabled>Use Secret Passage</button>
+                <button id="end-turn">End Turn</button>
+            </div>
+        </div>
+
+        <main>
+            <div class="game-area">
+                <div class="game-board">
+                    <!-- Clean 3x3 Clue Board -->
+                    <div class="board-container" id="clue-board">
+                        <!-- Top Row -->
+                        <div class="room study" data-room="Study">
+                            <div class="room-theme"></div>
+                            <div class="room-label">Study</div>
+                            <div class="secret-passage" data-from="Study" data-to="Kitchen">🚪</div>
+                            <div class="room-characters"></div>
+                        </div>
+                        
+                        <div class="room hall" data-room="Hall">
+                            <div class="room-theme"></div>
+                            <div class="room-label">Hall</div>
+                            <div class="room-characters"></div>
+                        </div>
+                        
+                        <div class="room lounge" data-room="Lounge">
+                            <div class="room-theme"></div>
+                            <div class="room-label">Lounge</div>
+                            <div class="secret-passage" data-from="Lounge" data-to="Conservatory">🚪</div>
+                            <div class="room-characters"></div>
+                        </div>
+                        
+                        <!-- Middle Row -->
+                        <div class="room library" data-room="Library">
+                            <div class="room-theme"></div>
+                            <div class="room-label">Library</div>
+                            <div class="room-characters"></div>
+                        </div>
+                        
+                        <div class="room clue">
+                            <div class="clue-logo">CLUE</div>
+                            <div class="clue-subtitle">Detective Notes</div>
+                        </div>
+                        
+                        <div class="room billiard" data-room="Billiard Room">
+                            <div class="room-theme"></div>
+                            <div class="room-label">Billiard Room</div>
+                            <div class="room-characters"></div>
+                        </div>
+                        
+                        <!-- Bottom Row -->
+                        <div class="room conservatory" data-room="Conservatory">
+                            <div class="room-theme"></div>
+                            <div class="room-label">Conservatory</div>
+                            <div class="secret-passage" data-from="Conservatory" data-to="Lounge">🚪</div>
+                            <div class="room-characters"></div>
+                        </div>
+                        
+                        <div class="room ballroom" data-room="Ballroom">
+                            <div class="room-theme"></div>
+                            <div class="room-label">Ballroom</div>
+                            <div class="room-characters"></div>
+                        </div>
+                        
+                        <div class="room kitchen" data-room="Kitchen">
+                            <div class="room-theme"></div>
+                            <div class="room-label">Kitchen</div>
+                            <div class="secret-passage" data-from="Kitchen" data-to="Study">🚪</div>
+                            <div class="room-characters"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Character Tokens Container -->
+                    <div id="character-tokens"></div>
+                </div>
+            </div>
+
+            <!-- Detective Notebook - Right Side -->
+            <div class="detective-notebook-right">
+                <div class="notebook-header">
+                    <h3>🕵️ Detective Notebook</h3>
+                </div>
+                <div class="notebook-sections-blocks">
+                    <div class="notebook-section-block">
+                        <div class="section-header-block">
+                            <span class="section-icon">👤</span>
+                            <span class="section-title">Suspects</span>
+                        </div>
+                        <div class="section-items-block" id="suspects-content"></div>
+                    </div>
+                    <div class="notebook-section-block">
+                        <div class="section-header-block">
+                            <span class="section-icon">🔪</span>
+                            <span class="section-title">Weapons</span>
+                        </div>
+                        <div class="section-items-block" id="weapons-content"></div>
+                    </div>
+                    <div class="notebook-section-block">
+                        <div class="section-header-block">
+                            <span class="section-icon">🏠</span>
+                            <span class="section-title">Rooms</span>
+                        </div>
+                        <div class="section-items-block" id="rooms-content"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Game Modals -->
+        <div class="game-modals">
+            <div id="join-game-modal" class="modal">
+                <div class="modal-content">
+                    <h2>Join Game</h2>
+                    <input type="text" id="player-name" placeholder="Enter your name">
+                    <button id="join-game">Join Game</button>
+                </div>
+            </div>
+
+            <div id="suggestion-modal" class="modal">
+                <div class="modal-content">
+                    <h2>Make a Suggestion</h2>
+                    <div class="suggestion-form">
+                        <select id="suspect-select">
+                            <option value="">Select Suspect</option>
+                        </select>
+                        <select id="weapon-select">
+                            <option value="">Select Weapon</option>
+                        </select>
+                        <select id="room-select">
+                            <option value="">Select Room</option>
+                        </select>
+                        <button id="submit-suggestion">Submit Suggestion</button>
+                        <button id="cancel-suggestion">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="accusation-modal" class="modal">
+                <div class="modal-content">
+                    <h2>Make an Accusation</h2>
+                    <div class="accusation-form">
+                        <select id="accusation-suspect">
+                            <option value="">Select Suspect</option>
+                        </select>
+                        <select id="accusation-weapon">
+                            <option value="">Select Weapon</option>
+                        </select>
+                        <select id="accusation-room">
+                            <option value="">Select Room</option>
+                        </select>
+                        <button id="submit-accusation">Submit Accusation</button>
+                        <button id="cancel-accusation">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,2526 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-bg: #0f0f23;
+    --secondary-bg: #1a1a2e;
+    --accent-bg: #16213e;
+    --card-bg: #ffffff;
+    --primary-text: #ffffff;
+    --secondary-text: #a8a8b3;
+    --accent-color: #6c5ce7;
+    --success-color: #00b894;
+    --warning-color: #fdcb6e;
+    --danger-color: #e17055;
+    --border-radius: 16px;
+    --shadow-light: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --shadow-heavy: 0 16px 64px rgba(0, 0, 0, 0.16);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Board Game Colors */
+    --board-bg: #8B4513;
+    --wall-color: #4A4A4A;
+    --door-color: #FFD700;
+    --passage-color: #8A2BE2;
+    --scarlet-color: #DC143C;
+    --mustard-color: #FFD700;
+    --white-color: #FFFFFF;
+    --green-color: #228B22;
+    --peacock-color: #4169E1;
+    --plum-color: #8B008B;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+    color: var(--primary-text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(108, 92, 231, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 184, 148, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(253, 203, 110, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: clamp(8px, 1.5vw, 16px);
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    margin-bottom: clamp(8px, 1vh, 12px);
+    padding: clamp(8px, 1.5vh, 16px);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    flex-shrink: 0;
+}
+
+header h1 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-color), var(--success-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: clamp(4px, 0.5vh, 8px);
+    letter-spacing: -0.02em;
+}
+
+.game-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.game-info span {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Top Controls */
+.top-controls {
+    display: flex;
+    gap: clamp(6px, 0.8vw, 10px);
+    margin-bottom: clamp(6px, 0.8vh, 10px);
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: clamp(6px, 0.8vh, 8px);
+    box-shadow: var(--shadow-medium);
+    min-height: auto;
+    max-height: none;
+    width: 100%;
+    max-width: 100%;
+}
+
+.top-controls .players-section,
+.top-controls .cards-section,
+.top-controls .actions-section {
+    flex: 1;
+    min-width: 140px;
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: clamp(6px, 0.8vh, 8px) clamp(8px, 1vw, 10px);
+    border-radius: 6px;
+    box-shadow: var(--shadow-light);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+}
+
+.top-controls h3 {
+    color: var(--accent-color);
+    margin-bottom: clamp(2px, 0.3vh, 4px);
+    font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+    flex-shrink: 0;
+}
+
+.actions-section button {
+    width: 100%;
+    padding: clamp(4px, 0.6vh, 6px) clamp(8px, 1.2vw, 10px);
+    margin: clamp(1px, 0.2vh, 2px) 0;
+    border: none;
+    border-radius: 4px;
+    font-size: clamp(0.65rem, 1.2vw, 0.75rem);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    height: clamp(24px, 3vh, 32px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#make-suggestion {
+    background: linear-gradient(135deg, var(--success-color), #00a085);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#make-accusation {
+    background: linear-gradient(135deg, var(--danger-color), #d63031);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#end-turn {
+    background: linear-gradient(135deg, var(--warning-color), #e17055);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.actions-section button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-heavy);
+}
+
+/* Dice Section */
+.dice-section {
+    margin-bottom: clamp(4px, 0.8vh, 8px);
+    padding: clamp(4px, 0.8vh, 8px);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    text-align: center;
+}
+
+#roll-dice {
+    width: 100%;
+    padding: clamp(6px, 1vh, 8px) clamp(8px, 1.2vw, 12px);
+    margin: clamp(2px, 0.4vh, 4px) 0;
+    border: none;
+    border-radius: 6px;
+    font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    background: linear-gradient(135deg, var(--accent-color), #5f3dc4);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#roll-dice:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-heavy);
+}
+
+#roll-dice:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#dice-result {
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: bold;
+    color: var(--accent-color);
+    margin: clamp(4px, 0.8vh, 8px) 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+#movement-points {
+    font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+    color: var(--warning-color);
+    font-weight: 600;
+    margin-top: clamp(2px, 0.4vh, 4px);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr clamp(250px, 25vw, 300px);
+    gap: clamp(8px, 1vw, 16px);
+    align-items: start;
+    min-height: calc(100vh - 160px);
+    overflow: visible;
+    position: relative;
+    flex: 1;
+}
+
+.game-area {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: clamp(8px, 1vh, 12px);
+}
+
+.game-board {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: clamp(8px, 1.5vw, 16px);
+    box-shadow: var(--shadow-medium);
+    position: relative;
+    min-height: 400px;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === CLUE BOARD CONTAINER === */
+.clue-board-container {
+    position: relative;
+    width: 100%;
+    max-width: min(70vh, 90vw);
+    aspect-ratio: 1;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--board-bg), #A0522D);
+    border: 6px solid #654321;
+    border-radius: 20px;
+    box-shadow: 
+        inset 0 0 20px rgba(0,0,0,0.3),
+        0 8px 32px rgba(0,0,0,0.4);
+    overflow: hidden;
+}
+
+/* === BOARD CONTAINER (3x3 Grid) === */
+.board-container {
+    position: relative;
+    width: 100%;
+    max-width: min(70vh, 90vw);
+    aspect-ratio: 1;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--board-bg), #A0522D);
+    border: 6px solid #654321;
+    border-radius: 20px;
+    box-shadow: 
+        inset 0 0 20px rgba(0,0,0,0.3),
+        0 8px 32px rgba(0,0,0,0.4);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: 
+        "study hall lounge"
+        "library clue billiard"
+        "conservatory ballroom kitchen";
+    gap: 8px;
+    padding: 12px;
+}
+
+/* === BOARD GRID === */
+.board-grid {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 8px;
+    z-index: 1;
+}
+
+/* === CENTRAL CLUE AREA === */
+.central-clue-area {
+    position: relative;
+    background: 
+        radial-gradient(circle at 30% 30%, rgba(255,215,0,0.3), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1), transparent 60%),
+        linear-gradient(135deg, #2F4F4F, #1C1C1C);
+    border: 4px solid #FFD700;
+    border-radius: 15px;
+    box-shadow: 
+        inset 0 0 20px rgba(255,215,0,0.3),
+        0 4px 20px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 10;
+}
+
+/* Central Clue Area (Modern Grid Version) */
+.clue {
+    background: linear-gradient(135deg, #2F4F4F, #1C1C1C);
+    border: 4px solid #FFD700 !important;
+    box-shadow: 
+        inset 0 0 20px rgba(255,215,0,0.3),
+        0 8px 25px rgba(0,0,0,0.4) !important;
+    cursor: default !important;
+    pointer-events: none;
+}
+
+.clue:hover {
+    transform: none !important;
+    box-shadow: 
+        inset 0 0 20px rgba(255,215,0,0.3),
+        0 8px 25px rgba(0,0,0,0.4) !important;
+}
+
+.clue-logo {
+    position: relative;
+    z-index: 11;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 
+        2px 2px 4px rgba(0,0,0,0.8),
+        0 0 10px rgba(255,215,0,0.5);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+}
+
+.clue-subtitle {
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
+    color: #FFFFFF;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+.logo-text {
+    font-family: 'Crimson Text', serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 
+        2px 2px 4px rgba(0,0,0,0.8),
+        0 0 10px rgba(255,215,0,0.5);
+    letter-spacing: 3px;
+    margin-bottom: 5px;
+}
+
+.logo-subtitle {
+    font-size: clamp(0.6rem, 1.2vw, 0.8rem);
+    color: #FFFFFF;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.center-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.magnifying-glass {
+    position: absolute;
+    top: 15%;
+    right: 15%;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #FFD700;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+}
+
+.magnifying-glass::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    width: 12px;
+    height: 3px;
+    background: #FFD700;
+    border-radius: 2px;
+    transform: rotate(45deg);
+}
+
+.detective-hat {
+    position: absolute;
+    bottom: 20%;
+    left: 20%;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 12px solid #2F4F4F;
+}
+
+.detective-hat::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: -12px;
+    width: 24px;
+    height: 3px;
+    background: #2F4F4F;
+    border-radius: 2px;
+}
+
+.footprints {
+    position: absolute;
+    bottom: 10%;
+    right: 25%;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+}
+
+.footprints::before {
+    content: '👣';
+}
+
+/* === ROOM STYLING === */
+.room {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+        inset 0 0 10px rgba(0,0,0,0.2),
+        0 4px 15px rgba(0,0,0,0.3);
+    border: 3px solid #2c3e50;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.room:hover {
+    transform: scale(1.02);
+    box-shadow: 
+        inset 0 0 10px rgba(0,0,0,0.2),
+        0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* Room Grid Positions */
+.study { grid-area: study; }
+.hall { grid-area: hall; }
+.lounge { grid-area: lounge; }
+.library { grid-area: library; }
+.clue { grid-area: clue; }
+.billiard { grid-area: billiard; }
+.conservatory { grid-area: conservatory; }
+.ballroom { grid-area: ballroom; }
+.kitchen { grid-area: kitchen; }
+
+/* Room Themes */
+.room-theme {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.study .room-theme {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23654321"/><rect x="10" y="20" width="30" height="60" fill="%23A0522D"/><rect x="60" y="20" width="30" height="60" fill="%23A0522D"/></svg>');
+}
+
+.kitchen .room-theme {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="checker" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="10" height="10" fill="%23fff"/><rect x="10" y="10" width="10" height="10" fill="%23fff"/></pattern></defs><rect width="100" height="100" fill="url(%23checker)"/></svg>');
+}
+
+.ballroom .room-theme {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23FFD700"/><circle cx="50" cy="30" r="15" fill="%23FFA500"/><rect x="20" y="60" width="60" height="30" fill="%23FFFFFF" opacity="0.3"/></svg>');
+}
+
+.conservatory .room-theme {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%239370DB"/><circle cx="30" cy="40" r="8" fill="%2332CD32"/><circle cx="70" cy="40" r="8" fill="%2332CD32"/><circle cx="50" cy="70" r="8" fill="%2332CD32"/></svg>');
+}
+
+/* Room Characters Container */
+.room-characters {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    z-index: 20;
+}
+
+.room-character-indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+    border: 1px solid white;
+}
+
+/* Character Tokens */
+#character-tokens {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 30;
+}
+
+.character-token {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 3px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 25;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    pointer-events: auto;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.character-token:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+}
+
+.character-token.active {
+    animation: glow 2s ease-in-out infinite alternate;
+    box-shadow: 0 0 20px currentColor;
+}
+
+.character-token.dragging {
+    opacity: 0.7;
+    transform: scale(1.1);
+}
+
+.room.highlight {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+}
+
+/* Secret Passages (Grid Version) */
+.secret-passage {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: #8A2BE2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+    z-index: 15;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.5);
+}
+
+.secret-passage:hover {
+    transform: scale(1.2);
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.8);
+}
+
+.room-walls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.wall {
+    position: absolute;
+    background: var(--wall-color);
+    box-shadow: 
+        inset 0 0 3px rgba(0,0,0,0.5),
+        0 0 3px rgba(0,0,0,0.3);
+}
+
+.wall-top {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+}
+
+.wall-bottom {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+}
+
+.wall-left {
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+}
+
+.wall-right {
+    right: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+}
+
+.room-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.room-label {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: 'Crimson Text', serif;
+    font-size: clamp(0.7rem, 1.3vw, 0.9rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 10;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.room-furniture {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+/* === DOORWAYS === */
+.doorway {
+    position: absolute;
+    background: var(--door-color);
+    border: 2px solid #FFA500;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    z-index: 15;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.doorway:hover {
+    background: #FFA500;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(255,165,0,0.6);
+}
+
+.door-top {
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 8px;
+}
+
+.door-bottom {
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 8px;
+}
+
+.door-left {
+    left: -3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 20px;
+}
+
+.door-right {
+    right: -3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 20px;
+}
+
+/* === SECRET PASSAGES === */
+.secret-passage {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, var(--passage-color), #6A0DAD);
+    border: 3px solid #9370DB;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 20;
+    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.5);
+}
+
+.secret-passage:hover {
+    transform: scale(1.2);
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.8);
+}
+
+.passage-to-kitchen {
+    bottom: -15px;
+    right: -15px;
+}
+
+.passage-to-conservatory {
+    bottom: -15px;
+    left: -15px;
+}
+
+.passage-to-lounge {
+    bottom: -15px;
+    right: -15px;
+}
+
+.passage-to-study {
+    top: -15px;
+    left: -15px;
+}
+
+.passage-arrow {
+    font-size: 16px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    font-weight: bold;
+}
+
+/* === PLAYER TOKENS === */
+.player-token {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 3px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 25;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.player-token:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+}
+
+.player-token.active {
+    animation: glow 2s ease-in-out infinite alternate;
+    box-shadow: 0 0 20px currentColor;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 20px currentColor; }
+    to { box-shadow: 0 0 30px currentColor, 0 0 40px currentColor; }
+}
+
+.token-initial {
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Player Colors */
+.start-scarlet {
+    background: var(--scarlet-color);
+    top: -40px;
+    left: 20%;
+}
+
+.start-mustard {
+    background: var(--mustard-color);
+    color: #000;
+    top: 50%;
+    left: -40px;
+}
+
+.start-white {
+    background: var(--white-color);
+    color: #000;
+    bottom: -40px;
+    left: 20%;
+}
+
+.start-green {
+    background: var(--green-color);
+    bottom: -40px;
+    right: 20%;
+}
+
+.start-peacock {
+    background: var(--peacock-color);
+    top: 50%;
+    right: -40px;
+}
+
+.start-plum {
+    background: var(--plum-color);
+    top: -40px;
+    right: 20%;
+}
+
+/* === ROOM-SPECIFIC STYLING === */
+
+/* STUDY */
+.study {
+    background: linear-gradient(135deg, #8B4513, #A0522D);
+    background-image: 
+        linear-gradient(90deg, #654321 0%, #8B4513 50%, #654321 100%),
+        linear-gradient(90deg, #CD853F 0%, #D2691E 50%, #CD853F 100%);
+    background-size: 35% 50%, 35% 8px;
+    background-position: 10% 25%, 10% 35%;
+    background-repeat: no-repeat;
+}
+
+.study .bookshelf {
+    position: absolute;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border: 2px solid #4A4A4A;
+    border-radius: 3px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+}
+
+.study .bookshelf-1 {
+    top: 25%;
+    left: 10%;
+    width: 35%;
+    height: 50%;
+}
+
+.study .bookshelf-2 {
+    top: 25%;
+    right: 10%;
+    width: 35%;
+    height: 50%;
+}
+
+.study .bookshelf::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    height: 8px;
+    background: linear-gradient(90deg, #CD853F, #D2691E, #CD853F);
+    border-radius: 2px;
+}
+
+.study .bookshelf::after {
+    content: '';
+    position: absolute;
+    top: 60%;
+    left: 10%;
+    width: 80%;
+    height: 8px;
+    background: linear-gradient(90deg, #CD853F, #D2691E, #CD853F);
+    border-radius: 2px;
+}
+
+.study .desk {
+    position: absolute;
+    bottom: 15%;
+    left: 20%;
+    width: 60%;
+    height: 15px;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.study .chair {
+    position: absolute;
+    bottom: 25%;
+    left: 40%;
+    width: 20%;
+    height: 12px;
+    background: linear-gradient(135deg, #8B4513, #A0522D);
+    border-radius: 2px;
+}
+
+.study .lamp {
+    position: absolute;
+    bottom: 18%;
+    right: 25%;
+    width: 8px;
+    height: 8px;
+    background: #FFD700;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255,215,0,0.6);
+}
+
+/* HALL */
+.hall {
+    background: linear-gradient(135deg, #4682B4, #5F9EA0);
+}
+
+.hall .chandelier {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 15px;
+    background: radial-gradient(circle, #FFD700, #FFA500);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255,215,0,0.8);
+}
+
+.hall .chandelier::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 10px;
+    background: #654321;
+}
+
+.hall .pillar {
+    position: absolute;
+    width: 12px;
+    height: 40%;
+    background: linear-gradient(135deg, #D3D3D3, #A9A9A9);
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+.hall .pillar-1 {
+    top: 30%;
+    left: 20%;
+}
+
+.hall .pillar-2 {
+    top: 30%;
+    right: 20%;
+}
+
+.hall .carpet {
+    position: absolute;
+    bottom: 15%;
+    left: 15%;
+    width: 70%;
+    height: 25%;
+    background: linear-gradient(135deg, #8B0000, #DC143C);
+    border-radius: 8px;
+    opacity: 0.8;
+}
+
+.hall .stairs {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 8px;
+    background: linear-gradient(90deg, #696969, #808080);
+    border-radius: 2px;
+}
+
+.hall .stairs::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 10%;
+    width: 80%;
+    height: 4px;
+    background: linear-gradient(90deg, #696969, #808080);
+    border-radius: 2px;
+}
+
+/* LOUNGE */
+.lounge {
+    background: linear-gradient(135deg, #DC143C, #B22222);
+}
+
+.lounge .sofa {
+    position: absolute;
+    bottom: 30%;
+    left: 15%;
+    width: 70%;
+    height: 20%;
+    background: linear-gradient(135deg, #8B0000, #A0522D);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.lounge .fireplace {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    width: 25%;
+    height: 35%;
+    background: linear-gradient(135deg, #2F4F4F, #4A4A4A);
+    border-radius: 4px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.lounge .fireplace::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, #FF4500, #FF6347);
+    border-radius: 50%;
+    animation: flicker 2s ease-in-out infinite alternate;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.8; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.1); }
+}
+
+.lounge .coffee-table {
+    position: absolute;
+    bottom: 20%;
+    left: 30%;
+    width: 40%;
+    height: 12px;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.lounge .armchair {
+    position: absolute;
+    bottom: 25%;
+    left: 10%;
+    width: 15%;
+    height: 15px;
+    background: linear-gradient(135deg, #8B4513, #A0522D);
+    border-radius: 4px;
+}
+
+.lounge .rug {
+    position: absolute;
+    bottom: 10%;
+    left: 20%;
+    width: 60%;
+    height: 35%;
+    background: linear-gradient(45deg, #8B0000, #DC143C);
+    border-radius: 12px;
+    opacity: 0.7;
+}
+
+/* LIBRARY */
+.library {
+    background: linear-gradient(135deg, #2F4F4F, #008080);
+}
+
+.library .large-bookshelf {
+    position: absolute;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border: 2px solid #4A4A4A;
+    border-radius: 3px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+}
+
+.library .shelf-1 {
+    top: 15%;
+    left: 5%;
+    width: 25%;
+    height: 70%;
+}
+
+.library .shelf-2 {
+    top: 15%;
+    left: 37.5%;
+    width: 25%;
+    height: 70%;
+}
+
+.library .shelf-3 {
+    top: 15%;
+    right: 5%;
+    width: 25%;
+    height: 70%;
+}
+
+.library .large-bookshelf::before {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 8%;
+    width: 84%;
+    height: 6px;
+    background: linear-gradient(90deg, #CD853F, #D2691E, #CD853F);
+    border-radius: 2px;
+}
+
+.library .large-bookshelf::after {
+    content: '';
+    position: absolute;
+    top: 40%;
+    left: 8%;
+    width: 84%;
+    height: 6px;
+    background: linear-gradient(90deg, #CD853F, #D2691E, #CD853F);
+    border-radius: 2px;
+}
+
+.library .reading-table {
+    position: absolute;
+    bottom: 15%;
+    left: 25%;
+    width: 50%;
+    height: 15px;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.library .ladder {
+    position: absolute;
+    top: 20%;
+    right: 15%;
+    width: 4px;
+    height: 50%;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 2px;
+}
+
+.library .ladder::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: -2px;
+    width: 8px;
+    height: 2px;
+    background: #654321;
+    box-shadow: 0 8px 0 #654321, 0 16px 0 #654321;
+}
+
+.library .globe {
+    position: absolute;
+    bottom: 20%;
+    right: 15%;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #4169E1, #191970);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(65,105,225,0.5);
+}
+
+/* BILLIARD ROOM */
+.billiard {
+    background: linear-gradient(135deg, #228B22, #32CD32);
+}
+
+.billiard .pool-table {
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    width: 70%;
+    height: 40%;
+    background: linear-gradient(135deg, #006400, #228B22);
+    border: 3px solid #8B4513;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.billiard .pool-table::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background: #006400;
+    border-radius: 4px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+}
+
+.billiard .pool-balls {
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    width: 50%;
+    height: 20%;
+    background: 
+        radial-gradient(circle at 20% 30%, #FFFFFF 2px, transparent 2px),
+        radial-gradient(circle at 40% 60%, #FF0000 2px, transparent 2px),
+        radial-gradient(circle at 60% 40%, #FFFF00 2px, transparent 2px),
+        radial-gradient(circle at 80% 70%, #0000FF 2px, transparent 2px);
+}
+
+.billiard .cue-rack {
+    position: absolute;
+    bottom: 15%;
+    right: 10%;
+    width: 20%;
+    height: 30%;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.billiard .cue-rack::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 3px;
+    background: #8B4513;
+    border-radius: 2px;
+    box-shadow: 0 8px 0 #8B4513, 0 16px 0 #8B4513;
+}
+
+.billiard .score-board {
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 25%;
+    height: 15%;
+    background: linear-gradient(135deg, #2F4F4F, #4A4A4A);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.billiard .bar-counter {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    width: 60%;
+    height: 12px;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+/* CONSERVATORY */
+.conservatory {
+    background: linear-gradient(135deg, #9370DB, #8A2BE2);
+}
+
+.conservatory .greenhouse-frame {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    border: 3px solid #C0C0C0;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    box-shadow: inset 0 0 10px rgba(255,255,255,0.2);
+}
+
+.conservatory .greenhouse-frame::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #C0C0C0;
+}
+
+.conservatory .greenhouse-frame::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background: #C0C0C0;
+}
+
+.conservatory .plant-table {
+    position: absolute;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.conservatory .table-1 {
+    top: 25%;
+    left: 20%;
+    width: 25%;
+    height: 12px;
+}
+
+.conservatory .table-2 {
+    top: 25%;
+    right: 20%;
+    width: 25%;
+    height: 12px;
+}
+
+.conservatory .plant-table::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 20%;
+    width: 60%;
+    height: 8px;
+    background: linear-gradient(135deg, #228B22, #32CD32);
+    border-radius: 50%;
+}
+
+.conservatory .watering-can {
+    position: absolute;
+    bottom: 25%;
+    left: 15%;
+    width: 15px;
+    height: 10px;
+    background: linear-gradient(135deg, #696969, #808080);
+    border-radius: 3px;
+}
+
+.conservatory .watering-can::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -5px;
+    width: 8px;
+    height: 2px;
+    background: #696969;
+    border-radius: 1px;
+}
+
+.conservatory .flower-pots {
+    position: absolute;
+    bottom: 20%;
+    left: 40%;
+    width: 40%;
+    height: 20%;
+    background: 
+        radial-gradient(circle at 25% 80%, #8B4513 4px, transparent 4px),
+        radial-gradient(circle at 75% 80%, #8B4513 4px, transparent 4px);
+}
+
+.conservatory .flower-pots::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20%;
+    width: 60%;
+    height: 40%;
+    background: 
+        radial-gradient(circle at 25% 20%, #FF69B4 2px, transparent 2px),
+        radial-gradient(circle at 75% 20%, #FFD700 2px, transparent 2px);
+}
+
+.conservatory .garden-tools {
+    position: absolute;
+    bottom: 15%;
+    right: 15%;
+    width: 20%;
+    height: 25%;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 2px;
+}
+
+/* DINING ROOM */
+.dining {
+    background: linear-gradient(135deg, #FF6347, #FF4500);
+}
+
+.dining .dining-table {
+    position: absolute;
+    top: 35%;
+    left: 20%;
+    width: 60%;
+    height: 30%;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.dining .dining-table::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: linear-gradient(135deg, #8B4513, #A0522D);
+    border-radius: 50%;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+}
+
+.dining .dining-chair {
+    position: absolute;
+    width: 12px;
+    height: 8px;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.dining .chair-1 {
+    top: 25%;
+    left: 45%;
+}
+
+.dining .chair-2 {
+    top: 50%;
+    left: 15%;
+}
+
+.dining .chair-3 {
+    top: 50%;
+    right: 15%;
+}
+
+.dining .chair-4 {
+    bottom: 25%;
+    left: 45%;
+}
+
+.dining .dining-chair::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 2px;
+}
+
+.dining .china-cabinet {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width: 25%;
+    height: 40%;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.dining .china-cabinet::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    width: 70%;
+    height: 60%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    border-radius: 2px;
+    box-shadow: inset 0 0 4px rgba(255,255,255,0.2);
+}
+
+.dining .candelabra {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 10%;
+    height: 15%;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(255,215,0,0.6);
+}
+
+.dining .candelabra::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 8px;
+    background: #FF4500;
+    border-radius: 1px;
+}
+
+/* BALLROOM */
+.ballroom {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+}
+
+.ballroom .dance-floor {
+    position: absolute;
+    bottom: 20%;
+    left: 15%;
+    width: 70%;
+    height: 50%;
+    background: 
+        repeating-linear-gradient(
+            45deg,
+            #FFFFFF,
+            #FFFFFF 8px,
+            #000000 8px,
+            #000000 16px
+        );
+    border-radius: 8px;
+    opacity: 0.8;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.ballroom .grand-piano {
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    width: 35%;
+    height: 25%;
+    background: linear-gradient(135deg, #2F2F2F, #1C1C1C);
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+.ballroom .grand-piano::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    height: 60%;
+    background: linear-gradient(135deg, #FFFFFF, #F0F0F0);
+    border-radius: 2px;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+}
+
+.ballroom .grand-piano::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    width: 70%;
+    height: 2px;
+    background: repeating-linear-gradient(
+        90deg,
+        #000000,
+        #000000 2px,
+        transparent 2px,
+        transparent 4px
+    );
+}
+
+.ballroom .ballroom-chandelier {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 20px;
+    background: radial-gradient(circle, #FFD700, #FFA500);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255,215,0,0.9);
+}
+
+.ballroom .ballroom-chandelier::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 12px;
+    background: #654321;
+}
+
+.ballroom .ballroom-chandelier::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 20%;
+    width: 60%;
+    height: 8px;
+    background: linear-gradient(135deg, #F0E68C, rgba(255,255,255,0.6));
+    border-radius: 50%;
+}
+
+.ballroom .music-notes {
+    position: absolute;
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    animation: float 3s ease-in-out infinite;
+}
+
+.ballroom .note-1 {
+    top: 25%;
+    right: 20%;
+    animation-delay: 0s;
+}
+
+.ballroom .note-2 {
+    top: 35%;
+    right: 15%;
+    animation-delay: 1s;
+}
+
+.ballroom .note-3 {
+    top: 45%;
+    right: 25%;
+    animation-delay: 2s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.ballroom .elegant-carpet {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    width: 80%;
+    height: 60%;
+    background: radial-gradient(circle, #8B0000, #DC143C);
+    border-radius: 12px;
+    opacity: 0.6;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.ballroom .elegant-carpet::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(255,215,0,0.3), transparent 70%);
+    border-radius: 50%;
+}
+
+/* KITCHEN */
+.kitchen {
+    background: linear-gradient(135deg, #708090, #2F4F4F);
+}
+
+.kitchen .checkered-floor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            45deg,
+            #FFFFFF,
+            #FFFFFF 8px,
+            #000000 8px,
+            #000000 16px
+        );
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.kitchen .kitchen-counter {
+    position: absolute;
+    bottom: 25%;
+    left: 10%;
+    width: 80%;
+    height: 15px;
+    background: linear-gradient(135deg, #696969, #808080);
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    z-index: 2;
+}
+
+.kitchen .stove {
+    position: absolute;
+    top: 30%;
+    right: 15%;
+    width: 30%;
+    height: 25%;
+    background: linear-gradient(135deg, #2F4F4F, #4A4A4A);
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    z-index: 2;
+}
+
+.kitchen .stove::before {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    width: 60%;
+    height: 50%;
+    background: 
+        radial-gradient(circle at 25% 25%, #FF4500 3px, transparent 3px),
+        radial-gradient(circle at 75% 25%, #FF4500 3px, transparent 3px),
+        radial-gradient(circle at 25% 75%, #FF4500 3px, transparent 3px),
+        radial-gradient(circle at 75% 75%, #FF4500 3px, transparent 3px);
+    border-radius: 2px;
+}
+
+.kitchen .refrigerator {
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 25%;
+    height: 60%;
+    background: linear-gradient(135deg, #F0F0F0, #DCDCDC);
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    z-index: 2;
+}
+
+.kitchen .refrigerator::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 80%;
+    width: 8px;
+    height: 15px;
+    background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
+    border-radius: 2px;
+}
+
+.kitchen .refrigerator::after {
+    content: '';
+    position: absolute;
+    top: 60%;
+    left: 80%;
+    width: 8px;
+    height: 15px;
+    background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
+    border-radius: 2px;
+}
+
+.kitchen .kitchen-sink {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    width: 20%;
+    height: 15%;
+    background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
+    border-radius: 4px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    z-index: 2;
+}
+
+.kitchen .kitchen-sink::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    background: linear-gradient(135deg, #4682B4, #5F9EA0);
+    border-radius: 50%;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+}
+
+.kitchen .kitchen-island {
+    position: absolute;
+    bottom: 35%;
+    left: 30%;
+    width: 40%;
+    height: 15px;
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    z-index: 2;
+}
+
+/* === DETECTIVE NOTEBOOK === */
+.detective-notebook-right {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    min-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: none;
+}
+
+.detective-notebook-right .notebook-header {
+    padding: clamp(4px, 1vh, 8px) clamp(6px, 1vw, 12px);
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.detective-notebook-right .notebook-header h3 {
+    color: var(--accent-color);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 700;
+    margin: 0;
+}
+
+.notebook-sections-blocks {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.notebook-section-block {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.section-header-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(3px, 0.5vw, 6px);
+    padding: clamp(4px, 1vh, 6px) clamp(6px, 1vw, 8px);
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+}
+
+.section-header-block .section-icon {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+}
+
+.section-header-block .section-title {
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--accent-color);
+}
+
+.section-items-block {
+    flex: 1;
+    padding: clamp(4px, 1vh, 6px);
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2px, 0.5vh, 3px);
+    align-content: start;
+    max-height: 25vh;
+}
+
+.section-items-block::-webkit-scrollbar {
+    width: 2px;
+}
+
+.section-items-block::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1px;
+}
+
+.section-items-block::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 1px;
+}
+
+.notebook-item {
+    display: flex;
+    align-items: center;
+    padding: clamp(3px, 0.5vh, 4px) clamp(4px, 0.8vw, 6px);
+    margin: 0;
+    border-radius: 4px;
+    transition: var(--transition);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.notebook-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-color);
+}
+
+.notebook-item input[type="checkbox"] {
+    margin-right: clamp(4px, 0.8vw, 6px);
+    width: clamp(12px, 2vw, 14px);
+    height: clamp(12px, 2vw, 14px);
+    accent-color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.notebook-item label {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+    line-height: 1.1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+/* === MODALS === */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 8% auto;
+    padding: 40px;
+    border-radius: var(--border-radius);
+    width: 480px;
+    max-width: 90%;
+    box-shadow: var(--shadow-heavy);
+    animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-32px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-content h2 {
+    color: var(--accent-color);
+    margin-bottom: 24px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.modal-content input[type="text"],
+.modal-content select {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 12px 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: var(--primary-text);
+    transition: var(--transition);
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+}
+
+.modal-content button {
+    width: 48%;
+    padding: 14px 20px;
+    margin: 16px 1%;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.modal-content button:first-of-type {
+    background: linear-gradient(135deg, var(--success-color), #00a085);
+    color: white;
+}
+
+.modal-content button:first-of-type:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.modal-content button:last-of-type {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-text);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-content button:last-of-type:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.suggestion-form, .accusation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 1024px) {
+    main {
+        grid-template-columns: 1fr;
+        min-height: calc(100vh - 140px);
+        gap: clamp(6px, 1vh, 12px);
+    }
+    
+    .game-info {
+        gap: clamp(8px, 2vw, 16px);
+        flex-direction: column;
+    }
+    
+    .top-controls {
+        flex-direction: column;
+        gap: clamp(4px, 0.8vh, 8px);
+        max-height: none;
+        min-height: auto;
+    }
+    
+    .top-controls .players-section,
+    .top-controls .cards-section,
+    .top-controls .actions-section {
+        min-width: unset;
+        min-height: auto;
+        max-height: none;
+    }
+    
+    .detective-notebook-right {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: 100%;
+        height: auto;
+        z-index: 1;
+        max-height: 50vh;
+        order: 2;
+    }
+    
+    .container {
+        padding: clamp(6px, 1.5vw, 12px);
+    }
+    
+    .clue-board-container {
+        max-width: min(60vh, 85vw);
+    }
+    
+    .player-token {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .token-initial {
+        font-size: 12px;
+    }
+    
+    .logo-text {
+        font-size: clamp(1.2rem, 3vw, 2rem);
+    }
+    
+    .room-label {
+        font-size: clamp(0.6rem, 1.1vw, 0.8rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: clamp(4px, 1vw, 8px);
+    }
+    
+    header {
+        padding: clamp(6px, 1vh, 12px);
+        margin-bottom: clamp(6px, 1vh, 12px);
+    }
+    
+    header h1 {
+        font-size: clamp(1.2rem, 5vw, 2rem);
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: clamp(4px, 1vh, 8px);
+    }
+    
+    .top-controls {
+        flex-direction: column;
+        gap: clamp(3px, 0.6vh, 6px);
+        padding: clamp(4px, 0.8vh, 8px);
+        max-height: none;
+        min-height: auto;
+    }
+    
+    .top-controls .players-section,
+    .top-controls .cards-section,
+    .top-controls .actions-section {
+        min-height: auto;
+        max-height: none;
+    }
+    
+    .top-controls .actions-section {
+        display: flex;
+        flex-direction: row;
+        gap: clamp(3px, 0.8vw, 6px);
+    }
+    
+    .top-controls .actions-section button {
+        flex: 1;
+        margin: 0;
+        font-size: clamp(0.6rem, 1.6vw, 0.75rem);
+        padding: clamp(4px, 0.8vh, 8px) clamp(6px, 1.2vw, 10px);
+        height: clamp(20px, 2.5vh, 28px);
+    }
+    
+    main {
+        gap: clamp(6px, 1vh, 12px);
+        min-height: calc(100vh - 130px);
+        grid-template-columns: 1fr;
+    }
+    
+    .clue-board-container {
+        max-width: min(50vh, 90vw);
+    }
+    
+    .player-token {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .token-initial {
+        font-size: 10px;
+    }
+    
+    .logo-text {
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+    }
+    
+    .room-label {
+        font-size: clamp(0.5rem, 1vw, 0.7rem);
+        padding: 2px 6px;
+    }
+    
+    .door-top, .door-bottom {
+        width: 16px;
+        height: 6px;
+    }
+    
+    .door-left, .door-right {
+        width: 6px;
+        height: 16px;
+    }
+    
+    .secret-passage {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .passage-arrow {
+        font-size: 12px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: clamp(16px, 3vw, 24px);
+        margin: 15% auto;
+    }
+    
+    .modal-content button {
+        width: 100%;
+        margin: clamp(4px, 1vh, 8px) 0;
+    }
+    
+    .detective-notebook-right {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: 100%;
+        height: auto;
+        z-index: 1;
+        max-height: 40vh;
+        order: 2;
+    }
+    
+    .section-items-block {
+        max-height: 20vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: clamp(2px, 0.8vw, 6px);
+    }
+    
+    header {
+        padding: clamp(4px, 0.8vh, 8px);
+        margin-bottom: clamp(4px, 0.8vh, 8px);
+    }
+    
+    header h1 {
+        font-size: clamp(1rem, 6vw, 1.5rem);
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: clamp(2px, 0.8vh, 6px);
+    }
+    
+    .game-info span {
+        font-size: clamp(0.7rem, 3vw, 0.9rem);
+        padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+    }
+    
+    .top-controls {
+        flex-direction: column;
+        gap: clamp(2px, 0.5vh, 4px);
+        padding: clamp(3px, 0.6vh, 6px);
+        max-height: none;
+        min-height: auto;
+    }
+    
+    .top-controls .players-section,
+    .top-controls .cards-section,
+    .top-controls .actions-section {
+        min-width: unset;
+        min-height: auto;
+        max-height: none;
+        padding: clamp(4px, 0.8vh, 6px);
+    }
+    
+    .top-controls .actions-section {
+        display: flex;
+        flex-direction: row;
+        gap: clamp(2px, 0.6vw, 4px);
+        flex-wrap: wrap;
+    }
+    
+    .top-controls .actions-section button {
+        flex: 1;
+        min-width: calc(50% - 2px);
+        margin: 0;
+        font-size: clamp(0.55rem, 2vw, 0.7rem);
+        padding: clamp(3px, 0.6vh, 6px) clamp(4px, 1vw, 8px);
+        height: clamp(18px, 2vh, 24px);
+    }
+    
+    main {
+        grid-template-columns: 1fr;
+        min-height: calc(100vh - 120px);
+        gap: clamp(4px, 0.8vh, 8px);
+    }
+    
+    .clue-board-container {
+        max-width: min(45vh, 95vw);
+        gap: 6px;
+        padding: clamp(6px, 0.8vw, 12px);
+    }
+    
+    .player-token {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .token-initial {
+        font-size: 8px;
+    }
+    
+    .logo-text {
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
+    }
+    
+    .room-label {
+        font-size: clamp(0.45rem, 0.9vw, 0.6rem);
+        padding: 2px 4px;
+    }
+    
+    .door-top, .door-bottom {
+        width: 14px;
+        height: 5px;
+    }
+    
+    .door-left, .door-right {
+        width: 5px;
+        height: 14px;
+    }
+    
+    .secret-passage {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .passage-arrow {
+        font-size: 10px;
+    }
+    
+    .detective-notebook-right {
+        position: relative;
+        width: 100%;
+        height: auto;
+        z-index: 1;
+        max-height: 35vh;
+        order: 2;
+    }
+    
+    .detective-notebook-right .notebook-header h3 {
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
+    }
+    
+    .section-header-block .section-title {
+        font-size: clamp(0.65rem, 2vw, 0.8rem);
+    }
+    
+    .section-items-block {
+        max-height: 15vh;
+    }
+    
+    .notebook-item label {
+        font-size: clamp(0.6rem, 2vw, 0.75rem);
+    }
+    
+    .modal-content {
+        width: 98%;
+        padding: clamp(12px, 2vw, 16px);
+        margin: 20% auto;
+    }
+    
+    .modal-content h2 {
+        font-size: clamp(1.1rem, 4vw, 1.3rem);
+    }
+    
+    .modal-content button {
+        width: 100%;
+        margin: clamp(3px, 0.8vh, 6px) 0;
+        padding: clamp(8px, 1.5vh, 12px);
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
+    }
+    
+    .board-grid {
+        gap: 6px;
+    }
+}
+
+/* === ANIMATIONS === */
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 16px rgba(108, 92, 231, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(108, 92, 231, 0);
+    }
+}
+
+/* === HOVER EFFECTS === */
+.room.active {
+    animation: roomGlow 2s infinite;
+    border-color: var(--success-color);
+}
+
+@keyframes roomGlow {
+    0% { box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 4px 15px rgba(0,0,0,0.3); }
+    50% { box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 8px 25px rgba(0, 184, 148, 0.6); }
+    100% { box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 4px 15px rgba(0,0,0,0.3); }
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* === FINAL TOUCHES === */
+.clue-board-container::before {
+    content: '';
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    height: 96%;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 16px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.room-furniture > * {
+    z-index: 4;
+}
+
+.room-content {
+    z-index: 5;
+}
+
+.room-label {
+    z-index: 10;
+}
+
+.doorway {
+    z-index: 15;
+}
+
+.secret-passage {
+    z-index: 20;
+}
+
+.player-token {
+    z-index: 25;
+}
+
+/* Remove all pseudo-elements that are causing dots */
+.room-furniture *::before, 
+.room-furniture *::after {
+    display: none !important;
+}
