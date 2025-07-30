@@ -1,0 +1,595 @@
+{
+  "rooms": [
+    {
+      "id": "study",
+      "row": 0,
+      "col": 0,
+      "width": 7,
+      "height": 4,
+      "name": "Study",
+      "color": "#8B4513"
+    },
+    {
+      "id": "hall",
+      "row": 0,
+      "col": 9,
+      "width": 6,
+      "height": 7,
+      "name": "Hall",
+      "color": "#4169E1"
+    },
+    {
+      "id": "lounge",
+      "row": 0,
+      "col": 17,
+      "width": 7,
+      "height": 6,
+      "name": "Lounge",
+      "color": "#DC143C"
+    },
+    {
+      "id": "library",
+      "row": 6,
+      "col": 0,
+      "width": 7,
+      "height": 5,
+      "name": "Library",
+      "color": "#228B22"
+    },
+    {
+      "id": "billiard",
+      "row": 12,
+      "col": 0,
+      "width": 6,
+      "height": 5,
+      "name": "Billiard Room",
+      "color": "#FFD700"
+    },
+    {
+      "id": "conservatory",
+      "row": 19,
+      "col": 0,
+      "width": 6,
+      "height": 5,
+      "name": "Conservatory",
+      "color": "#FF69B4"
+    },
+    {
+      "id": "ballroom",
+      "row": 17,
+      "col": 8,
+      "width": 8,
+      "height": 7,
+      "name": "Ballroom",
+      "color": "#8B008B"
+    },
+    {
+      "id": "kitchen",
+      "row": 18,
+      "col": 18,
+      "width": 6,
+      "height": 6,
+      "name": "Kitchen",
+      "color": "#FF4500"
+    },
+    {
+      "id": "dining",
+      "row": 9,
+      "col": 16,
+      "width": 8,
+      "height": 7,
+      "name": "Dining Room",
+      "color": "#32CD32"
+    }
+  ],
+  "hallways": [
+    {
+      "row": 8,
+      "col": 7,
+      "width": 11,
+      "height": 1,
+      "name": "Upper Horizontal"
+    },
+    {
+      "row": 15,
+      "col": 7,
+      "width": 11,
+      "height": 1,
+      "name": "Lower Horizontal"
+    },
+    {
+      "row": 7,
+      "col": 8,
+      "width": 1,
+      "height": 2,
+      "name": "Upper Left Vertical"
+    },
+    {
+      "row": 14,
+      "col": 8,
+      "width": 1,
+      "height": 2,
+      "name": "Lower Left Vertical"
+    },
+    {
+      "row": 7,
+      "col": 15,
+      "width": 1,
+      "height": 2,
+      "name": "Upper Right Vertical"
+    },
+    {
+      "row": 14,
+      "col": 15,
+      "width": 1,
+      "height": 2,
+      "name": "Lower Right Vertical"
+    },
+    {
+      "row": 0,
+      "col": 11,
+      "width": 1,
+      "height": 8,
+      "name": "Top Vertical"
+    },
+    {
+      "row": 16,
+      "col": 11,
+      "width": 1,
+      "height": 9,
+      "name": "Bottom Vertical"
+    },
+    {
+      "row": 11,
+      "col": 0,
+      "width": 25,
+      "height": 1,
+      "name": "Main Horizontal"
+    },
+    {
+      "row": 13,
+      "col": 1,
+      "width": 6,
+      "height": 1,
+      "name": "Library-Dining Connector"
+    }
+  ],
+  "individualHallwayCells": [
+    "15,16",
+    "15,17",
+    "15,18",
+    "23,14",
+    "23,15",
+    "23,9",
+    "23,8",
+    "19,5",
+    "6,6",
+    "10,6"
+  ],
+  "doors": [
+    {
+      "row": 3,
+      "col": 6,
+      "symbol": "🚪",
+      "room": "study"
+    },
+    {
+      "row": 4,
+      "col": 9,
+      "symbol": "🚪",
+      "room": "hall"
+    },
+    {
+      "row": 6,
+      "col": 11,
+      "symbol": "🚪",
+      "room": "hall"
+    },
+    {
+      "row": 6,
+      "col": 12,
+      "symbol": "🚪",
+      "room": "hall"
+    },
+    {
+      "row": 5,
+      "col": 17,
+      "symbol": "🚪",
+      "room": "lounge"
+    },
+    {
+      "row": 8,
+      "col": 6,
+      "symbol": "🚪",
+      "room": "library"
+    },
+    {
+      "row": 10,
+      "col": 3,
+      "symbol": "🚪",
+      "room": "library"
+    },
+    {
+      "row": 12,
+      "col": 1,
+      "symbol": "🚪",
+      "room": "billiard"
+    },
+    {
+      "row": 15,
+      "col": 5,
+      "symbol": "🚪",
+      "room": "billiard"
+    },
+    {
+      "row": 12,
+      "col": 16,
+      "symbol": "🚪",
+      "room": "dining"
+    },
+    {
+      "row": 19,
+      "col": 4,
+      "symbol": "🚪",
+      "room": "conservatory"
+    },
+    {
+      "row": 19,
+      "col": 8,
+      "symbol": "🚪",
+      "room": "ballroom"
+    },
+    {
+      "row": 17,
+      "col": 9,
+      "symbol": "🚪",
+      "room": "ballroom"
+    },
+    {
+      "row": 18,
+      "col": 19,
+      "symbol": "🚪",
+      "room": "kitchen"
+    },
+    {
+      "row": 17,
+      "col": 14,
+      "symbol": "🚪",
+      "room": "ballroom"
+    },
+    {
+      "row": 19,
+      "col": 15,
+      "symbol": "🚪",
+      "room": "ballroom"
+    }
+  ],
+  "starts": [
+    {
+      "row": 0,
+      "col": 16,
+      "name": "Miss Lalitha",
+      "initial": "L",
+      "color": "#e74c3c"
+    },
+    {
+      "row": 7,
+      "col": 23,
+      "name": "Major Surya",
+      "initial": "S",
+      "color": "#f39c12"
+    },
+    {
+      "row": 24,
+      "col": 14,
+      "name": "Mrs. Shweta",
+      "initial": "W",
+      "color": "#ecf0f1"
+    },
+    {
+      "row": 24,
+      "col": 9,
+      "name": "Dr. Harith",
+      "initial": "H",
+      "color": "#27ae60"
+    },
+    {
+      "row": 18,
+      "col": 0,
+      "name": "Professor Mayuri",
+      "initial": "M",
+      "color": "#3498db"
+    },
+    {
+      "row": 5,
+      "col": 0,
+      "name": "Captain Neel",
+      "initial": "N",
+      "color": "#9b59b6"
+    }
+  ],
+  "secrets": [
+    {
+      "row": 0,
+      "col": 0,
+      "symbol": "🔄",
+      "connects": [
+        "study",
+        "kitchen"
+      ]
+    },
+    {
+      "row": 0,
+      "col": 23,
+      "symbol": "🔄",
+      "connects": [
+        "lounge",
+        "conservatory"
+      ]
+    },
+    {
+      "row": 23,
+      "col": 0,
+      "symbol": "🔄",
+      "connects": [
+        "conservatory",
+        "lounge"
+      ]
+    },
+    {
+      "row": 23,
+      "col": 23,
+      "symbol": "🔄",
+      "connects": [
+        "kitchen",
+        "study"
+      ]
+    }
+  ],
+  "blocked": [
+    {
+      "row": 0,
+      "col": 6
+    },
+    {
+      "row": 0,
+      "col": 8
+    },
+    {
+      "row": 4,
+      "col": 0
+    },
+    {
+      "row": 6,
+      "col": 0
+    },
+    {
+      "row": 10,
+      "col": 0
+    },
+    {
+      "row": 11,
+      "col": 0
+    },
+    {
+      "row": 19,
+      "col": 0
+    },
+    {
+      "row": 17,
+      "col": 0
+    },
+    {
+      "row": 23,
+      "col": 6
+    },
+    {
+      "row": 24,
+      "col": 0
+    },
+    {
+      "row": 24,
+      "col": 1
+    },
+    {
+      "row": 24,
+      "col": 2
+    },
+    {
+      "row": 24,
+      "col": 3
+    },
+    {
+      "row": 24,
+      "col": 4
+    },
+    {
+      "row": 24,
+      "col": 5
+    },
+    {
+      "row": 24,
+      "col": 6
+    },
+    {
+      "row": 24,
+      "col": 7
+    },
+    {
+      "row": 24,
+      "col": 8
+    },
+    {
+      "row": 24,
+      "col": 10
+    },
+    {
+      "row": 24,
+      "col": 11
+    },
+    {
+      "row": 24,
+      "col": 12
+    },
+    {
+      "row": 24,
+      "col": 13
+    },
+    {
+      "row": 24,
+      "col": 16
+    },
+    {
+      "row": 24,
+      "col": 17
+    },
+    {
+      "row": 24,
+      "col": 18
+    },
+    {
+      "row": 24,
+      "col": 19
+    },
+    {
+      "row": 24,
+      "col": 20
+    },
+    {
+      "row": 24,
+      "col": 21
+    },
+    {
+      "row": 24,
+      "col": 22
+    },
+    {
+      "row": 24,
+      "col": 23
+    },
+    {
+      "row": 24,
+      "col": 24
+    },
+    {
+      "row": 24,
+      "col": 15
+    },
+    {
+      "row": 21,
+      "col": 24
+    },
+    {
+      "row": 23,
+      "col": 24
+    },
+    {
+      "row": 22,
+      "col": 24
+    },
+    {
+      "row": 20,
+      "col": 24
+    },
+    {
+      "row": 16,
+      "col": 24
+    },
+    {
+      "row": 16,
+      "col": 23
+    },
+    {
+      "row": 17,
+      "col": 24
+    },
+    {
+      "row": 18,
+      "col": 24
+    },
+    {
+      "row": 19,
+      "col": 24
+    },
+    {
+      "row": 13,
+      "col": 24
+    },
+    {
+      "row": 14,
+      "col": 24
+    },
+    {
+      "row": 15,
+      "col": 24
+    },
+    {
+      "row": 12,
+      "col": 24
+    },
+    {
+      "row": 11,
+      "col": 24
+    },
+    {
+      "row": 10,
+      "col": 24
+    },
+    {
+      "row": 9,
+      "col": 24
+    },
+    {
+      "row": 8,
+      "col": 24
+    },
+    {
+      "row": 6,
+      "col": 23
+    },
+    {
+      "row": 8,
+      "col": 23
+    },
+    {
+      "row": 7,
+      "col": 24
+    },
+    {
+      "row": 6,
+      "col": 24
+    },
+    {
+      "row": 5,
+      "col": 24
+    },
+    {
+      "row": 3,
+      "col": 24
+    },
+    {
+      "row": 2,
+      "col": 24
+    },
+    {
+      "row": 1,
+      "col": 24
+    },
+    {
+      "row": 0,
+      "col": 24
+    },
+    {
+      "row": 4,
+      "col": 24
+    },
+    {
+      "row": 0,
+      "col": 17
+    },
+    {
+      "row": 0,
+      "col": 15
+    }
+  ]
+}

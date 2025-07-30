@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Room Layout - Virtual Clue Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0f0f23;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #6c5ce7;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .board-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .classic-clue-board {
+            display: grid;
+            grid-template-columns: repeat(25, 20px);
+            grid-template-rows: repeat(25, 20px);
+            gap: 1px;
+            background: #4A4A4A;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .board-tile {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .board-tile.wall {
+            background: #2c2c2c;
+        }
+
+        .board-tile.hallway {
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        .board-tile.door {
+            background: #FFD700;
+            color: #000;
+        }
+
+        .board-tile.secret {
+            background: #8A2BE2;
+            color: white;
+        }
+
+        .board-tile.start {
+            background: #FF6B6B;
+            color: white;
+            font-weight: bold;
+        }
+
+        .board-tile.center-space {
+            background: #333;
+            color: white;
+            font-size: 8px;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .center-logo {
+            font-size: 6px;
+            font-weight: bold;
+        }
+
+        .center-author {
+            font-size: 5px;
+            opacity: 0.8;
+        }
+
+        .board-tile.room {
+            color: white;
+            font-weight: bold;
+            font-size: 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .board-tile.study { background: #8B4513; }
+        .board-tile.hall { background: #4169E1; }
+        .board-tile.lounge { background: #DC143C; }
+        .board-tile.library { background: #228B22; }
+        .board-tile.billiard { background: #FFD700; color: #000; }
+        .board-tile.conservatory { background: #FF69B4; }
+        .board-tile.ballroom { background: #8B008B; }
+        .board-tile.kitchen { background: #FF4500; }
+        .board-tile.dining { background: #32CD32; }
+
+        .room-label {
+            font-size: 6px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            line-height: 1;
+        }
+
+        .legend {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+        }
+
+        .legend-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .legend-section h3 {
+            color: #6c5ce7;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            margin-right: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .back-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #6c5ce7;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #6c5ce7;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link a:hover {
+            background: #6c5ce7;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🕵️ Test Room Layout - Virtual Clue Game</h1>
+    
+    <div class="info">
+        <p><strong>Room Layout Test Page</strong></p>
+        <p>This page shows the classic Clue board layout with all 9 rooms, hallways, doors, and secret passages.</p>
+        <p>Use this to test and verify the room positioning without starting a full game.</p>
+    </div>
+
+    <div class="board-container">
+        <div class="classic-clue-board" id="clue-board">
+            <!-- Board will be generated by JavaScript -->
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-section">
+            <h3>Rooms</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #8B4513;"></div>
+                Study
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #4169E1;"></div>
+                Hall
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #DC143C;"></div>
+                Lounge
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #228B22;"></div>
+                Library
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FFD700;"></div>
+                Billiard Room
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FF69B4;"></div>
+                Conservatory
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #8B008B;"></div>
+                Ballroom
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FF4500;"></div>
+                Kitchen
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #32CD32;"></div>
+                Dining Room
+            </div>
+        </div>
+
+        <div class="legend-section">
+            <h3>Board Elements</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f4f4f4; border: 1px solid #ccc;"></div>
+                Hallways
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FFD700;"></div>
+                Doors (🚪)
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #8A2BE2;"></div>
+                Secret Passages (🔄)
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FF6B6B;"></div>
+                Starting Positions
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #2c2c2c;"></div>
+                Walls
+            </div>
+        </div>
+    </div>
+
+    <div class="back-link">
+        <a href="../index.html">← Back to Game</a> | 
+        <a href="test-layout.html">← Interactive Layout Tester</a>
+    </div>
+
+    <script>
+        class TestRoomLayout {
+            constructor() {
+                this.renderClassicBoard();
+            }
+
+            renderClassicBoard() {
+                const boardElement = document.getElementById('clue-board');
+                boardElement.innerHTML = '';
+                
+                // Create 25x25 grid
+                for (let row = 0; row < 25; row++) {
+                    for (let col = 0; col < 25; col++) {
+                        const tile = document.createElement('div');
+                        tile.className = 'board-tile wall';
+                        tile.dataset.row = row;
+                        tile.dataset.col = col;
+                        boardElement.appendChild(tile);
+                    }
+                }
+                
+                // Add classic rooms, hallways, doors, etc.
+                this.addClassicRooms();
+                this.addClassicHallways();
+                this.addClassicDoors();
+                this.addClassicSecrets();
+                this.addClassicStarts();
+                
+                // Add center space
+                const centerTile = this.getTile(12, 12);
+                if (centerTile) {
+                    centerTile.className = 'board-tile center-space';
+                    centerTile.innerHTML = `
+                        <div class="center-logo">Virtual Clue Game</div>
+                        <div class="center-author">by @Uma</div>
+                    `;
+                }
+            }
+
+            addClassicRooms() {
+                const rooms = [
+                    { row: 1, col: 1, width: 6, height: 6, name: 'Study', className: 'study' },
+                    { row: 1, col: 9, width: 6, height: 7, name: 'Hall', className: 'hall' },
+                    { row: 1, col: 17, width: 7, height: 6, name: 'Lounge', className: 'lounge' },
+                    { row: 8, col: 1, width: 6, height: 5, name: 'Library', className: 'library' },
+                    { row: 8, col: 17, width: 7, height: 7, name: 'Billiard Room', className: 'billiard' },
+                    { row: 17, col: 1, width: 7, height: 7, name: 'Conservatory', className: 'conservatory' },
+                    { row: 17, col: 10, width: 5, height: 7, name: 'Ballroom', className: 'ballroom' },
+                    { row: 17, col: 17, width: 7, height: 7, name: 'Kitchen', className: 'kitchen' },
+                    { row: 14, col: 1, width: 6, height: 5, name: 'Dining Room', className: 'dining' }
+                ];
+                
+                rooms.forEach(room => {
+                    for (let r = room.row; r < room.row + room.height; r++) {
+                        for (let c = room.col; c < room.col + room.width; c++) {
+                            if (r < 25 && c < 25) {
+                                const tile = this.getTile(r, c);
+                                if (tile) {
+                                    tile.className = `board-tile room ${room.className}`;
+                                    tile.dataset.room = room.name;
+                                    
+                                    // Add room label to center
+                                    if (r === room.row + Math.floor(room.height / 2) && 
+                                        c === room.col + Math.floor(room.width / 2)) {
+                                        tile.innerHTML = `<span class="room-label">${room.name}</span>`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            addClassicHallways() {
+                const hallways = [
+                    // Horizontal hallways
+                    { row: 8, col: 7, width: 11, height: 1 },
+                    { row: 15, col: 7, width: 11, height: 1 },
+                    // Vertical hallways  
+                    { row: 7, col: 8, width: 1, height: 2 },
+                    { row: 14, col: 8, width: 1, height: 2 },
+                    { row: 7, col: 15, width: 1, height: 2 },
+                    { row: 14, col: 15, width: 1, height: 2 },
+                    // Center cross
+                    { row: 0, col: 11, width: 1, height: 8 },
+                    { row: 16, col: 11, width: 1, height: 9 },
+                    { row: 11, col: 0, width: 25, height: 1 },
+                    // Hallway between Library and Dining Room
+                    { row: 13, col: 1, width: 6, height: 1 }
+                ];
+                
+                hallways.forEach(hall => {
+                    for (let r = hall.row; r < hall.row + hall.height; r++) {
+                        for (let c = hall.col; c < hall.col + hall.width; c++) {
+                            if (r < 25 && c < 25) {
+                                const tile = this.getTile(r, c);
+                                if (tile && !tile.dataset.room) {
+                                    tile.className = 'board-tile hallway';
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            addClassicDoors() {
+                const doors = [
+                    { row: 6, col: 4, symbol: '🚪' },
+                    { row: 4, col: 7, symbol: '🚪' },
+                    { row: 7, col: 11, symbol: '🚪' },
+                    { row: 7, col: 12, symbol: '🚪' },
+                    { row: 4, col: 17, symbol: '🚪' },
+                    { row: 6, col: 20, symbol: '🚪' },
+                    { row: 11, col: 6, symbol: '🚪' },
+                    { row: 13, col: 7, symbol: '🚪' },
+                    { row: 11, col: 17, symbol: '🚪' },
+                    { row: 13, col: 18, symbol: '🚪' },
+                    { row: 15, col: 4, symbol: '🚪' },
+                    { row: 18, col: 6, symbol: '🚪' },
+                    { row: 15, col: 12, symbol: '🚪' },
+                    { row: 15, col: 13, symbol: '🚪' },
+                    { row: 15, col: 19, symbol: '🚪' },
+                    { row: 18, col: 17, symbol: '🚪' }
+                ];
+                
+                doors.forEach(door => {
+                    const tile = this.getTile(door.row, door.col);
+                    if (tile) {
+                        tile.className = 'board-tile door';
+                        tile.textContent = door.symbol;
+                    }
+                });
+            }
+
+            addClassicSecrets() {
+                const secrets = [
+                    { row: 1, col: 1, symbol: '🔄' },
+                    { row: 1, col: 23, symbol: '🔄' },
+                    { row: 23, col: 1, symbol: '🔄' },
+                    { row: 23, col: 23, symbol: '🔄' }
+                ];
+                
+                secrets.forEach(secret => {
+                    const tile = this.getTile(secret.row, secret.col);
+                    if (tile) {
+                        tile.className = 'board-tile secret';
+                        tile.textContent = secret.symbol;
+                    }
+                });
+            }
+
+            addClassicStarts() {
+                const starts = [
+                    { row: 0, col: 9, name: 'Miss Lalitha', initial: 'L' },
+                    { row: 6, col: 0, name: 'Major Surya', initial: 'S' },
+                    { row: 17, col: 0, name: 'Mrs. Shweta', initial: 'W' },
+                    { row: 24, col: 14, name: 'Dr. Harith', initial: 'H' },
+                    { row: 24, col: 9, name: 'Professor Mayuri', initial: 'M' },
+                    { row: 6, col: 24, name: 'Captain Neel', initial: 'N' }
+                ];
+                
+                starts.forEach(start => {
+                    const tile = this.getTile(start.row, start.col);
+                    if (tile) {
+                        tile.className = 'board-tile start';
+                        tile.textContent = start.initial;
+                        tile.dataset.character = start.name;
+                        tile.title = start.name;
+                    }
+                });
+            }
+
+            getTile(row, col) {
+                return document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+            }
+        }
+
+        // Initialize the test layout when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new TestRoomLayout();
+        });
+    </script>
+</body>
+</html>

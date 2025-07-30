@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clue Board Grid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .clue-board {
+            display: grid;
+            grid-template-areas:
+                "study hallway1 hall hallway2 lounge"
+                "hallway3 path1 path2 path3 hallway4"
+                "library hallway5 center hallway6 billiard"
+                "hallway7 path4 path5 path6 hallway8"
+                "conservatory hallway9 ballroom hallway10 kitchen";
+            grid-template-columns: repeat(5, 100px);
+            grid-template-rows: repeat(5, 100px);
+            gap: 2px;
+            background: #654321;
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+        .tile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            border-radius: 6px;
+        }
+
+        .study { 
+            grid-area: study; 
+            background: #8B4513;
+        }
+        
+        .hallway1 { 
+            grid-area: hallway1; 
+            background: #DEB887;
+            color: #654321;
+        }
+        
+        .hall { 
+            grid-area: hall; 
+            background: #4682B4;
+        }
+        
+        .hallway2 { 
+            grid-area: hallway2; 
+            background: #DEB887;
+            color: #654321;
+        }
+        
+        .lounge { 
+            grid-area: lounge; 
+            background: #DC143C;
+        }
+        
+        .hallway3 { 
+            grid-area: hallway3; 
+            background: #DEB887;
+            color: #654321;
+        }
+        
+        .path1 { 
+            grid-area: path1; 
+            background: #FFD700;
+            color: #8B4513;
+        }
+        
+        .path2 { 
+            grid-area: path2; 
+            background: #FFD700;
+            color: #8B4513;
+        }
+        
+        .path3 { 
+            grid-area: path3; 
+            background: #FFD700;
+            color: #8B4513;
+        }
+        
+        .hallway4 { 
+            grid-area: hallway4; 
+            background: #DEB887;
+            color: #654321;
+        }
+        
+        .library { 
+            grid-area: library; 
+            background: #2F4F4F;
+        }
+        
+        .hallway5 { 
+            grid-area: hallway5; 
+            background: #DEB887;
+            color: #654321;
+        }
+        
+        .center { 
+            grid-area: center; 
+            background: #1a1a1a;
+            color: #FFD700;
+            font-size: 10px;
+            flex-direction: column;
+            border: 2px solid #FFD700;
+        }
+        
+        .center .title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        
+        .center .subtitle {
+            font-size: 8px;
+        }
+        
+        .hallway6 { 
+            grid-area: hallway6; 
+            background: #DEB887;
+            color: #654321;
+        }
+        
+        .billiard { 
+            grid-area: billiard; 
+            background: #228B22;
+        }
+        
+        .hallway7 { 
+            grid-area: hallway7; 
+            background: #DEB887;
+            color: #654321;
+        }
+        
+        .path4 { 
+            grid-area: path4; 
+            background: #FFD700;
+            color: #8B4513;
+        }
+        
+        .path5 { 
+            grid-area: path5; 
+            background: #FFD700;
+            color: #8B4513;
+        }
+        
+        .path6 { 
+            grid-area: path6; 
+            background: #FFD700;
+            color: #8B4513;
+        }
+        
+        .hallway8 { 
+            grid-area: hallway8; 
+            background: #DEB887;
+            color: #654321;
+        }
+        
+        .conservatory { 
+            grid-area: conservatory; 
+            background: #9370DB;
+        }
+        
+        .hallway9 { 
+            grid-area: hallway9; 
+            background: #DEB887;
+            color: #654321;
+        }
+        
+        .ballroom { 
+            grid-area: ballroom; 
+            background: #FFD700;
+            color: #2c3e50;
+        }
+        
+        .hallway10 { 
+            grid-area: hallway10; 
+            background: #DEB887;
+            color: #654321;
+        }
+        
+        .kitchen { 
+            grid-area: kitchen; 
+            background: #708090;
+        }
+    </style>
+</head>
+<body>
+    <div class="clue-board">
+        <div class="tile study">Study</div>
+        <div class="tile hallway1"></div>
+        <div class="tile hall">Hall</div>
+        <div class="tile hallway2"></div>
+        <div class="tile lounge">Lounge</div>
+        
+        <div class="tile hallway3"></div>
+        <div class="tile path1"></div>
+        <div class="tile path2"></div>
+        <div class="tile path3"></div>
+        <div class="tile hallway4"></div>
+        
+        <div class="tile library">Library</div>
+        <div class="tile hallway5"></div>
+        <div class="tile center">
+            <div class="title">Virtual Clue Game</div>
+            <div class="subtitle">by @Uma</div>
+        </div>
+        <div class="tile hallway6"></div>
+        <div class="tile billiard">Billiard Room</div>
+        
+        <div class="tile hallway7"></div>
+        <div class="tile path4"></div>
+        <div class="tile path5"></div>
+        <div class="tile path6"></div>
+        <div class="tile hallway8"></div>
+        
+        <div class="tile conservatory">Conservatory</div>
+        <div class="tile hallway9"></div>
+        <div class="tile ballroom">Ballroom</div>
+        <div class="tile hallway10"></div>
+        <div class="tile kitchen">Kitchen</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clue Board Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .clue-board {
+            display: grid;
+            grid-template-areas:
+                "study hallway1 hall hallway2 lounge"
+                "hallway3 path1 path2 path3 hallway4"
+                "library hallway5 center hallway6 billiard"
+                "hallway7 path4 path5 path6 hallway8"
+                "conservatory hallway9 ballroom hallway10 kitchen";
+            grid-template-columns: repeat(5, 100px);
+            grid-template-rows: repeat(5, 100px);
+            gap: 2px;
+            background: #654321;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        /* Base tile styling */
+        .tile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #333;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            transition: transform 0.2s ease;
+        }
+
+        .tile:hover {
+            transform: scale(1.05);
+        }
+
+        /* Room tiles */
+        .room {
+            font-size: 12px;
+            color: white;
+            border: 3px solid #fff;
+        }
+
+        .study { 
+            grid-area: study; 
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+        }
+        
+        .hall { 
+            grid-area: hall; 
+            background: linear-gradient(135deg, #4682B4, #5F9EA0);
+        }
+        
+        .lounge { 
+            grid-area: lounge; 
+            background: linear-gradient(135deg, #DC143C, #B22222);
+        }
+        
+        .library { 
+            grid-area: library; 
+            background: linear-gradient(135deg, #2F4F4F, #008080);
+        }
+        
+        .billiard { 
+            grid-area: billiard; 
+            background: linear-gradient(135deg, #228B22, #32CD32);
+        }
+        
+        .conservatory { 
+            grid-area: conservatory; 
+            background: linear-gradient(135deg, #9370DB, #8A2BE2);
+        }
+        
+        .ballroom { 
+            grid-area: ballroom; 
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #2c3e50;
+        }
+        
+        .kitchen { 
+            grid-area: kitchen; 
+            background: linear-gradient(135deg, #708090, #2F4F4F);
+        }
+
+        /* Center tile */
+        .center {
+            grid-area: center;
+            background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+            border: 3px solid #FFD700;
+            color: #FFD700;
+            font-size: 10px;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+            padding: 4px;
+            line-height: 1.1;
+        }
+
+        /* Hallway tiles */
+        .hallway {
+            background: linear-gradient(135deg, #DEB887, #D2B48C);
+            border: 1px solid #8B7355;
+            color: #654321;
+            font-size: 8px;
+        }
+
+        .hallway1 { grid-area: hallway1; }
+        .hallway2 { grid-area: hallway2; }
+        .hallway3 { grid-area: hallway3; }
+        .hallway4 { grid-area: hallway4; }
+        .hallway5 { grid-area: hallway5; }
+        .hallway6 { grid-area: hallway6; }
+        .hallway7 { grid-area: hallway7; }
+        .hallway8 { grid-area: hallway8; }
+        .hallway9 { grid-area: hallway9; }
+        .hallway10 { grid-area: hallway10; }
+
+        /* Path tiles (central intersection) */
+        .path {
+            background: linear-gradient(135deg, #F0E68C, #DEB887);
+            border: 2px solid #DAA520;
+            color: #8B4513;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .path1 { grid-area: path1; }
+        .path2 { grid-area: path2; }
+        .path3 { grid-area: path3; }
+        .path4 { grid-area: path4; }
+        .path5 { grid-area: path5; }
+        .path6 { grid-area: path6; }
+
+        /* Special styling for path intersection */
+        .path2, .path5 {
+            background: linear-gradient(135deg, #DAA520, #B8860B);
+            border-color: #8B6914;
+            color: white;
+        }
+
+        /* Debug info */
+        .debug-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="clue-board">
+        <!-- Row 1 -->
+        <div class="tile room study">Study</div>
+        <div class="tile hallway hallway1">H1</div>
+        <div class="tile room hall">Hall</div>
+        <div class="tile hallway hallway2">H2</div>
+        <div class="tile room lounge">Lounge</div>
+        
+        <!-- Row 2 -->
+        <div class="tile hallway hallway3">H3</div>
+        <div class="tile path path1">P1</div>
+        <div class="tile path path2">P2</div>
+        <div class="tile path path3">P3</div>
+        <div class="tile hallway hallway4">H4</div>
+        
+        <!-- Row 3 -->
+        <div class="tile room library">Library</div>
+        <div class="tile hallway hallway5">H5</div>
+        <div class="tile center">Virtual Clue Game<br>by @Uma</div>
+        <div class="tile hallway hallway6">H6</div>
+        <div class="tile room billiard">Billiard Room</div>
+        
+        <!-- Row 4 -->
+        <div class="tile hallway hallway7">H7</div>
+        <div class="tile path path4">P4</div>
+        <div class="tile path path5">P5</div>
+        <div class="tile path path6">P6</div>
+        <div class="tile hallway hallway8">H8</div>
+        
+        <!-- Row 5 -->
+        <div class="tile room conservatory">Conservatory</div>
+        <div class="tile hallway hallway9">H9</div>
+        <div class="tile room ballroom">Ballroom</div>
+        <div class="tile hallway hallway10">H10</div>
+        <div class="tile room kitchen">Kitchen</div>
+    </div>
+
+    <div class="debug-info">
+        <strong>Clue Board Layout</strong><br>
+        ✅ 5x5 CSS Grid<br>
+        ✅ grid-template-areas<br>
+        ✅ 100px × 100px tiles<br>
+        ✅ Color-coded areas<br>
+        ✅ Flexbox centering<br>
+        <br>
+        <strong>Legend:</strong><br>
+        🏠 Rooms: Colored<br>
+        🛤️ Hallways: H1-H10 (beige)<br>
+        ➕ Paths: P1-P6 (yellow)<br>
+        🎯 Center: Game title
+    </div>
+</body>
+</html>

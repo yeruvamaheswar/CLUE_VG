@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp:*)",
+      "Bash(rm:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(git remote set-url:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git init:*)",
+      "Bash(rg:*)",
+      "Bash(node:*)",
+      "Bash(ls:*)",
+      "Bash(echo \"Ready to push to GitHub! Please follow these steps:\n\n1. Go to https://github.com and create a new repository\n2. Name it ''VS-Code-Repo'' or similar\n3. Make it PUBLIC (required for GitHub Pages)\n4. Copy the commands GitHub gives you and run them here\n5. The commands will look like:\n   git remote add origin https://github.com/YOUR-USERNAME/REPO-NAME.git\n   git branch -M main  \n   git push -u origin main\")",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "WebFetch(domain:yeruvamaheswar.github.io)",
+      "Bash(python3:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(git checkout:*)",
+      "Bash(git stash:*)",
+      "Bash(open test-layout.html)",
+      "Bash(open:*)",
+      "Bash(git rm:*)",
+      "Bash(git rebase:*)"
+    ],
+    "deny": []
+  }
+}
